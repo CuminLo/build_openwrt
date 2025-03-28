@@ -23,6 +23,11 @@ add_list dhcp.@host[-1].mac='A4:39:B6:10:FE:85'
 set dhcp.@host[-1].ip='192.168.50.4'
 
 add dhcp host
+set dhcp.@host[-1].name='Device-PCDN-JDBox_Athena'
+add_list dhcp.@host[-1].mac='DC:D8:7C:5D:5A:C8'
+set dhcp.@host[-1].ip='192.168.50.11'
+
+add dhcp host
 set dhcp.@host[-1].name='container-jellyfin'
 add_list dhcp.@host[-1].mac='02:42:c0:a8:32:15'
 set dhcp.@host[-1].ip='192.168.50.21'
@@ -68,52 +73,57 @@ add_list dhcp.@host[-1].mac='22:13:4D:01:6B:BB'
 set dhcp.@host[-1].ip='192.168.50.49'
 
 add dhcp host
-set dhcp.@host[-1].name='Phone-Oneplus-9-pro.lan'
+set dhcp.@host[-1].name='Phone-Oneplus9Pro'
 add_list dhcp.@host[-1].mac='D0:49:7C:D5:43:50'
 set dhcp.@host[-1].ip='192.168.50.60'
 
 add dhcp host
-set dhcp.@host[-1].name='Laptop-Cumin-MacBookAir.lan'
+set dhcp.@host[-1].name='Laptop-Cumin-MacBookAir'
 add_list dhcp.@host[-1].mac='D6:EA:B5:26:34:02'
 set dhcp.@host[-1].ip='192.168.50.61'
 
 add dhcp host
-set dhcp.@host[-1].name='Computer-Game.lan'
+set dhcp.@host[-1].name='Computer-Game'
 add_list dhcp.@host[-1].mac='D0:12:55:B9:2D:A9'
 set dhcp.@host[-1].ip='192.168.50.62'
 
 add dhcp host
-set dhcp.@host[-1].name='Laptop-Mia-MacBookAir.lan'
+set dhcp.@host[-1].name='Laptop-Mia-MacBookAir'
 add_list dhcp.@host[-1].mac='90:FB:5D:02:AC:91'
 set dhcp.@host[-1].ip='192.168.50.63'
 
 add dhcp host
-set dhcp.@host[-1].name='Laptop-iPad.lan'
+set dhcp.@host[-1].name='Laptop-iPad'
 add_list dhcp.@host[-1].mac='60:06:E3:19:A0:15'
 set dhcp.@host[-1].ip='192.168.50.64'
 
 add dhcp host
-set dhcp.@host[-1].name='Phone-iPhone-13.lan'
+set dhcp.@host[-1].name='Phone-Mia-iPhone-13'
 add_list dhcp.@host[-1].mac='24:5E:48:B2:22:88'
 set dhcp.@host[-1].ip='192.168.50.65'
 
 add dhcp host
-set dhcp.@host[-1].name='Phone-Xiaomi-12X.lan'
+set dhcp.@host[-1].name='Phone-Xiaomi-12X'
 add_list dhcp.@host[-1].mac='50:98:39:2B:1A:34'
 set dhcp.@host[-1].ip='192.168.50.66'
 
 add dhcp host
-set dhcp.@host[-1].name='Print-Epson.lan'
+set dhcp.@host[-1].name='Phone-Mia-Work-iPhone'
+add_list dhcp.@host[-1].mac='DE:65:22:FC:56:FA'
+set dhcp.@host[-1].ip='192.168.50.67'
+
+add dhcp host
+set dhcp.@host[-1].name='Print-Epson'
 add_list dhcp.@host[-1].mac='A4:D7:3C:49:95:F'
 set dhcp.@host[-1].ip='192.168.50.80'
 
 add dhcp host
-set dhcp.@host[-1].name='IOT-HISENSE.lan'
+set dhcp.@host[-1].name='IOT-HISENSE'
 add_list dhcp.@host[-1].mac='B4:43:0D:D6:01:92'
 set dhcp.@host[-1].ip='192.168.50.81'
 
 add dhcp host
-set dhcp.@host[-1].name='IOT-BCD-408WPJD.lan'
+set dhcp.@host[-1].name='IOT-BCD-408WPJD'
 add_list dhcp.@host[-1].mac='B8:12:DA:CF:13:35'
 set dhcp.@host[-1].ip='192.168.50.82'
 
@@ -123,9 +133,19 @@ add_list dhcp.@host[-1].mac='64:90:C1:F3:38:94'
 set dhcp.@host[-1].ip='192.168.50.83'
 
 add dhcp host
-set dhcp.@host[-1].name='MiAiSoundbox-L05C.lan'
+set dhcp.@host[-1].name='IOT-BroadLink-SPmini-T1'
+add_list dhcp.@host[-1].mac='B4:43:0D:C4:EE:48'
+set dhcp.@host[-1].ip='192.168.50.84'
+
+add dhcp host
+set dhcp.@host[-1].name='MiAiSoundbox-L05C'
 add_list dhcp.@host[-1].mac='90:FB:5D:02:AC:91'
 set dhcp.@host[-1].ip='192.168.50.100'
+
+add dhcp host
+set dhcp.@host[-1].name='Device-Homeassistant-iPad2017'
+add_list dhcp.@host[-1].mac='20:EE:28:2C:D0:15'
+set dhcp.@host[-1].ip='192.168.50.1001'
 
 commit
 EOF
