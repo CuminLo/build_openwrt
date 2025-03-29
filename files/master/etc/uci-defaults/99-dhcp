@@ -64,7 +64,7 @@ set dhcp.@host[-1].ip='192.168.50.27'
 
 add dhcp host
 set dhcp.@host[-1].name='Xiaomi-iot-gateway-hub1'
-add_list dhcp.@host[-1].mac='B8:88:80:12:CA:C65'
+add_list dhcp.@host[-1].mac='B8:88:80:12:CA:C6'
 set dhcp.@host[-1].ip='192.168.50.40'
 
 add dhcp host
@@ -79,7 +79,7 @@ set dhcp.@host[-1].ip='192.168.50.60'
 
 add dhcp host
 set dhcp.@host[-1].name='Laptop-Cumin-MacBookAir'
-add_list dhcp.@host[-1].mac='D6:EA:B5:26:34:02'
+add_list dhcp.@host[-1].mac='74:A6:CD:D3:41:3F'
 set dhcp.@host[-1].ip='192.168.50.61'
 
 add dhcp host
@@ -89,7 +89,7 @@ set dhcp.@host[-1].ip='192.168.50.62'
 
 add dhcp host
 set dhcp.@host[-1].name='Laptop-Mia-MacBookAir'
-add_list dhcp.@host[-1].mac='90:FB:5D:02:AC:91'
+add_list dhcp.@host[-1].mac='1C:57:DC:4E:7C:AE'
 set dhcp.@host[-1].ip='192.168.50.63'
 
 add dhcp host
@@ -114,7 +114,7 @@ set dhcp.@host[-1].ip='192.168.50.67'
 
 add dhcp host
 set dhcp.@host[-1].name='Print-Epson'
-add_list dhcp.@host[-1].mac='A4:D7:3C:49:95:F'
+add_list dhcp.@host[-1].mac='A4:D7:3C:49:95:FF'
 set dhcp.@host[-1].ip='192.168.50.80'
 
 add dhcp host
@@ -145,7 +145,7 @@ set dhcp.@host[-1].ip='192.168.50.100'
 add dhcp host
 set dhcp.@host[-1].name='Device-Homeassistant-iPad2017'
 add_list dhcp.@host[-1].mac='20:EE:28:2C:D0:15'
-set dhcp.@host[-1].ip='192.168.50.1001'
+set dhcp.@host[-1].ip='192.168.50.101'
 
 commit
 EOF

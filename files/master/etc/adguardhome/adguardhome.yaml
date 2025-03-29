@@ -300,6 +300,7 @@ clients:
         - 192.168.50.67
       tags: []
       upstreams: []
+      uid: 0195dd40-724b-7afc-85da-d63d2c1277a3
       upstreams_cache_size: 0
       upstreams_cache_enabled: false
       use_global_settings: true

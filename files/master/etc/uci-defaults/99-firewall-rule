@@ -11,5 +11,15 @@ del firewall.cfg01e63d.fullcone6
 del firewall.cfg01e63d.flow_offloading_hw
 set firewall.cfg01e63d.synflood_protect='1'
 
+add_list firewall.cfg03dc81.network='wan'
+add_list firewall.cfg03dc81.network='MODEM'
+
+add_list firewall.cfg02dc81.network='lan'
+add_list firewall.cfg02dc81.network='WG'
+
+add_list network.cfg030f15.ports='eth0'
+add_list network.cfg030f15.ports='eth2'
+add_list network.cfg030f15.ports='eth3'
+
 commit
 EOF

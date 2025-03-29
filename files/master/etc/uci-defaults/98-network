@@ -20,5 +20,12 @@ set network.MODEM.gateway='192.168.1.1'
 set network.MODEM.netmask='255.255.255.0'
 set network.MODEM.defaultroute='0'
 
+
+del firewall.cfg02dc81.network
+add_list firewall.cfg02dc81.network='lan'
+del firewall.cfg03dc81.network
+add_list firewall.cfg03dc81.network='wan'
+del network.wan6
+
 commit
 EOF
