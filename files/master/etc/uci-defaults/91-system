@@ -7,7 +7,10 @@ set system.@system[0].timezone='CST-8'
 set system.@system[0].cronloglevel='8'
 set system.@system[0].conloglevel='7'
 
-del system.ntp.server
+del system.ntp.enabled
+del system.ntp.enable_server
+set system.cfg01e48a.log_proto='udp'
+
 add_list system.ntp.server='ntp.tencent.com'
 add_list system.ntp.server='ntp.aliyun.com'
 add_list system.ntp.server='ntp.ntsc.ac.cn'

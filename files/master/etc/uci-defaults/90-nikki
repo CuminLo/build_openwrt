@@ -1,5 +1,6 @@
 uci batch << EOF
 
+del nikki.subscription
 del nikki.proxy.bypass_user
 add_list nikki.proxy.bypass_user='ftp'
 add_list nikki.proxy.bypass_user='nobody'
@@ -21,7 +22,6 @@ add_list nikki.proxy.bypass_cgroup='aria2'
 add_list nikki.proxy.bypass_cgroup='dnsmasq'
 add_list nikki.proxy.bypass_cgroup='netbird'
 add_list nikki.proxy.bypass_cgroup='qbittorrent'
-add_list nikki.proxy.bypass_cgroup='tailscale'
 add_list nikki.proxy.bypass_cgroup='zerotier'
 set nikki.proxy.bypass_china_mainland_ip='1'
 set nikki.proxy.proxy_tcp_dport='21 22 80 110 143 194 443 465 853 993 995 8080 18080 28080 8443 18443 28443'
@@ -30,9 +30,11 @@ set nikki.proxy.tcp_transparent_proxy_mode='tun'
 set nikki.proxy.ipv4_dns_hijack='0'
 set nikki.proxy.ipv6_dns_hijack='0'
 set nikki.proxy.ipv6_proxy='0'
+del nikki.mixin.ipv6
 set nikki.mixin.log_level='debug'
 set nikki.mixin.unify_delay='1'
 set nikki.mixin.tcp_concurrent='1'
+set nikki.mixin.tun_stack='system'
 set nikki.mixin.fake_ip_range='198.18.0.0/15'
 set nikki.mixin.fake_ip_filter_mode='blacklist'
 set nikki.mixin.dns_respect_rules='1'
@@ -78,8 +80,12 @@ add_list nikki.proxy.acl_mac='1C:57:DC:4E:7C:AE'
 add_list nikki.proxy.acl_mac='22:13:4D:01:6B:BB'
 add_list nikki.proxy.acl_mac='D0:12:55:B9:2D:A9'
 add_list nikki.proxy.acl_mac='D0:49:7C:D5:43:50'
-add_list nikki.proxy.acl_mac='D6:EA:B5:26:34:02'
-add_list nikki.proxy.acl_mac='90:FB:5D:02:AC:91'
+add_list nikki.proxy.acl_mac='02:42:c0:a8:32:15'
+add_list nikki.proxy.acl_mac='02:42:c0:a8:32:17'
+add_list nikki.proxy.acl_mac='02:42:c0:a8:32:18'
+add_list nikki.proxy.acl_mac='02:42:c0:a8:32:20'
+add_list nikki.proxy.acl_mac='74:A6:CD:D3:41:3F'
+
 
 commit
 EOF
