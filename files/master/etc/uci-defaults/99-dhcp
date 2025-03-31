@@ -105,7 +105,7 @@ set dhcp.@host[-1].ip='192.168.50.65'
 
 add dhcp host
 set dhcp.@host[-1].name='Phone-Xiaomi-12X'
-add_list dhcp.@host[-1].mac='50:98:39:2B:1A:34'
+add_list dhcp.@host[-1].mac='12:42:B8:DB:A5:95'
 set dhcp.@host[-1].ip='192.168.50.66'
 
 add dhcp host
@@ -147,6 +147,16 @@ add dhcp host
 set dhcp.@host[-1].name='Device-Homeassistant-iPad2017'
 add_list dhcp.@host[-1].mac='20:EE:28:2C:D0:15'
 set dhcp.@host[-1].ip='192.168.50.101'
+
+add dhcp host
+set dhcp.@host[-1].name='Laura-Watch'
+add_list dhcp.@host[-1].mac='88:45:F0:4A:8E:74'
+set dhcp.@host[-1].ip='192.168.50.103'
+
+add dhcp host
+set dhcp.@host[-1].name='Lucy-Watch'
+add_list dhcp.@host[-1].mac='88:45:F0:54:F2:01'
+set dhcp.@host[-1].ip='192.168.50.104'
 
 commit
 EOF

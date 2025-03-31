@@ -76,6 +76,8 @@ add_list nikki.proxy.acl_ip='192.168.50.60'
 add_list nikki.proxy.acl_ip='192.168.50.61'
 add_list nikki.proxy.acl_ip='192.168.50.62'
 add_list nikki.proxy.acl_ip='192.168.50.63'
+add_list nikki.proxy.acl_ip='10.10.100.3'
+add_list nikki.proxy.acl_ip='10.10.100.2'
 add_list nikki.proxy.acl_mac='1C:57:DC:4E:7C:AE'
 add_list nikki.proxy.acl_mac='22:13:4D:01:6B:BB'
 add_list nikki.proxy.acl_mac='D0:12:55:B9:2D:A9'
@@ -85,7 +87,6 @@ add_list nikki.proxy.acl_mac='02:42:c0:a8:32:17'
 add_list nikki.proxy.acl_mac='02:42:c0:a8:32:18'
 add_list nikki.proxy.acl_mac='02:42:c0:a8:32:20'
 add_list nikki.proxy.acl_mac='74:A6:CD:D3:41:3F'
-
 
 commit
 EOF
