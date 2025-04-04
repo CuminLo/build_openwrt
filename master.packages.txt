@@ -102,6 +102,7 @@ usb-modeswitch
 wireless-tools
 iw-full
 vim-fuller
+nano-full
 tcpdump
 hwinfo
 iwinfo
@@ -131,6 +132,7 @@ nping-ssl
 qrencode
 libqrencode
 tailscale
+luci-i18n-dawn-zh-cn
 luci-i18n-netdata-zh-cn
 luci-i18n-package-manager-zh-cn
 luci-i18n-zerotier-zh-cn
@@ -149,4 +151,3 @@ luci-i18n-nlbwmon-zh-cn
 luci-i18n-ddns-go-zh-cn
 luci-i18n-nikki-zh-cn
 luci-i18n-netspeedtest-zh-cn
-luci-i18n-gecoosac-zh-cn

@@ -114,6 +114,11 @@ add_list dhcp.@host[-1].mac='DE:65:22:FC:56:FA'
 set dhcp.@host[-1].ip='192.168.50.67'
 
 add dhcp host
+set dhcp.@host[-1].name='Phone-Redmi-Note-11R'
+add_list dhcp.@host[-1].mac='F8:AB:82:C0:6B:D8'
+set dhcp.@host[-1].ip='192.168.50.68'
+
+add dhcp host
 set dhcp.@host[-1].name='Print-Epson'
 add_list dhcp.@host[-1].mac='A4:D7:3C:49:95:FF'
 set dhcp.@host[-1].ip='192.168.50.80'
