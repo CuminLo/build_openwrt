@@ -1,9 +1,9 @@
 # 使用ImageBuild的方式
 # - Master:        Main Router, 主路由，功能较全
-# - Proxy Gateway: “旁路由” 模式（https://cn.v2ex.com/t/691392）
+# - Proxy Gateway: “旁路由” 模式（https://cn.v2ex.com/t/691392），编译后直接运行在 Docker 下
 # - AP:            Ap模式
 
-name: Immortalwrt ImageBuild Master x86_64
+name: Immortalwrt ImageBuild Gateway x86_64
 
 on:
   repository_dispatch:
@@ -20,26 +20,10 @@ env:
   IMAGE_BUILD_NAME: immortalwrt-imagebuilder-24.10.0-x86-64.Linux-x86_64.tar.zst
   NIKKI_URL: https://github.com/nikkinikki-org/OpenWrt-nikki
   NIKKI_FEED_URL: https://nikkinikki.pages.dev/openwrt-24.10/x86_64/nikki
-  NETSPEEDTEST_URL: https://github.com/sirpdboy/netspeedtest.git
-  IS_ENABLE: 0
   IS_SSH_DEBUG: false
   UPLOAD_RELEASE: true
   DELETE_USELESS_FILES: true
   ROOT_PASSWORD: ${{ secrets.ROOT_PASSWORD }}
-  NETWORK_LAN_IP: ${{ secrets.NETWORK_LAN_IP }}
-  ZEROTIER_ID: ${{ secrets.ZEROTIER_ID }}
-  VPS_IP: ${{ secrets.VPS_IP }}
-  NETWORK_WAN_USERNAME: ${{ secrets.NETWORK_WAN_USERNAME }}
-  NETWORK_WAN_PASSWORD: ${{ secrets.NETWORK_WAN_PASSWORD }}
-  NETWORK_WG_PRESHARED_KEY_ONEPLUS: ${{ secrets.NETWORK_WG_PRESHARED_KEY_ONEPLUS }}
-  NETWORK_WG_PRESHARED_KEY_MAC_AIR: ${{ secrets.NETWORK_WG_PRESHARED_KEY_MAC_AIR }}
-  NETWORK_WG_PRESHARED_KEY_VPS: ${{ secrets.NETWORK_WG_PRESHARED_KEY_VPS }}
-  CLOUDFLARED_TUNNEL_TOKEN: ${{ secrets.CLOUDFLARED_TUNNEL_TOKEN }}
-  CLOUDFLARED_SECRET: ${{ secrets.CLOUDFLARED_SECRET }}
-  CLOUDFLARED_DDNS_DOMAIN_WG: ${{ secrets.CLOUDFLARED_DDNS_DOMAIN_WG }}
-  CLOUDFLARED_DDNS_DOMAIN_WGFOUR: ${{ secrets.CLOUDFLARED_DDNS_DOMAIN_WGFOUR }}
-  CLOUDFLARED_DDNS_DOMAIN_WGSIX: ${{ secrets.CLOUDFLARED_DDNS_DOMAIN_WGFOUR }}
-  CLOUDFLARED_DDNS_DOMAIN_RUSTDESK: ${{ secrets.CLOUDFLARED_DDNS_DOMAIN_RUSTDESK }}
 
 jobs:
   build:
@@ -110,7 +94,6 @@ jobs:
         tar -I zstd -xf immortalwrt-sdk.tar.zst -C $GITHUB_WORKSPACE/sdk --strip-components=1
         rm -rf immortalwrt-sdk.tar.zst
         cd $GITHUB_WORKSPACE/sdk
-        git clone $NETSPEEDTEST_URL package/netspeedtest
         git clone $NIKKI_URL package/nikki
         ./scripts/feeds update -a
         ./scripts/feeds install -a
@@ -123,13 +106,7 @@ jobs:
     - name: Build SDK Package
       run: |
         cd $GITHUB_WORKSPACE/sdk
-        make -j$(nproc) package/netspeedtest/luci-app-netspeedtest/compile \
-          package/nikki/luci-app-nikki/compile V=s || { echo "Compile failed"; exit 1; }
-        echo '============1============='
-        ls -al $GITHUB_WORKSPACE/sdk/bin/packages/x86_64/base/
-        echo '============2============='
-        ls -al $GITHUB_WORKSPACE/sdk/bin/packages/x86_64/*/
-        echo '============3============='
+        make -j$(nproc) package/nikki/luci-app-nikki/compile V=s || { echo "Compile failed"; exit 1; }
 
     - name: Download ImageBuild
       run: |
@@ -138,48 +115,16 @@ jobs:
         tar -I zstd -xf $IMAGE_BUILD_NAME -C $GITHUB_WORKSPACE/imagebuilder --strip-components=1
         rm -rf $IMAGE_BUILD_NAME
 
-    - name: Apply config patch
-      run: |
-        cd $GITHUB_WORKSPACE/imagebuilder && ls -al
-        if [ -f .config ]; then
-          patch .config < $GITHUB_WORKSPACE/master.config.patch || { echo "Patch failed"; exit 1; }
-          echo "Patch applied successfully"
-          grep "CONFIG_ISO_IMAGES" .config
-          grep "CONFIG_TARGET_KERNEL_PARTSIZE" .config
-        else
-          echo "No .config found"
-          exit 1
-        fi
-
     - name: Build the firmware
       id: compile
       run: |
-        sed -i "s|\$ROOT_PASSWORD|$ROOT_PASSWORD|g" "$GITHUB_WORKSPACE/files/master/etc/uci-defaults/91-system-root"
+        sed -i "s|\$ROOT_PASSWORD|$ROOT_PASSWORD|g" "$GITHUB_WORKSPACE/files/gateway/etc/uci-defaults/91-system-root"
+        sed -i "s|\$NIKKI_FEED_URL|$NIKKI_FEED_URL|g" "$GITHUB_WORKSPACE/files/gateway/etc/uci-defaults/90-nikki-feed"
 
-        sed -i "s|\$CLOUDFLARED_SECRET|$CLOUDFLARED_SECRET|g" "$GITHUB_WORKSPACE/files/master/etc/ddns-go/config.yaml"
-        sed -i "s|\$CLOUDFLARED_DDNS_DOMAIN_WGFOUR|$CLOUDFLARED_DDNS_DOMAIN_WGFOUR|g" "$GITHUB_WORKSPACE/files/master/etc/ddns-go/config.yaml"
-        sed -i "s|\$CLOUDFLARED_DDNS_DOMAIN_WGSIX|$CLOUDFLARED_DDNS_DOMAIN_WGSIX|g" "$GITHUB_WORKSPACE/files/master/etc/ddns-go/config.yaml"
-        sed -i "s|\$CLOUDFLARED_DDNS_DOMAIN_WG|$CLOUDFLARED_DDNS_DOMAIN_WG|g" "$GITHUB_WORKSPACE/files/master/etc/ddns-go/config.yaml"
-        sed -i "s|\$CLOUDFLARED_DDNS_DOMAIN_RUSTDESK|$CLOUDFLARED_DDNS_DOMAIN_RUSTDESK|g" "$GITHUB_WORKSPACE/files/master/etc/ddns-go/config.yaml"
-
-        for file in $(find $GITHUB_WORKSPACE/files/master/etc/uci-defaults -type f); do
-          sed -i "s|\$IS_ENABLE|$IS_ENABLE|g" "$file"
-          sed -i "s|\$ZEROTIER_ID|$ZEROTIER_ID|g" "$file"
-          sed -i "s|\$VPS_IP|$VPS_IP|g" "$file"
-          sed -i "s|\$NIKKI_FEED_URL|$NIKKI_FEED_URL|g" "$file"
-          sed -i "s|\$NETWORK_LAN_IP|$NETWORK_LAN_IP|g" "$file"
-          sed -i "s|\$NETWORK_WAN_USERNAME|$NETWORK_WAN_USERNAME|g" "$file"
-          sed -i "s|\$NETWORK_WAN_PASSWORD|$NETWORK_WAN_PASSWORD|g" "$file"
-          sed -i "s|\$NETWORK_WG_PRESHARED_KEY_ONEPLUS|$NETWORK_WG_PRESHARED_KEY_ONEPLUS|g" "$file"
-          sed -i "s|\$NETWORK_WG_PRESHARED_KEY_MAC_AIR|$NETWORK_WG_PRESHARED_KEY_MAC_AIR|g" "$file"
-          sed -i "s|\$NETWORK_WG_PRESHARED_KEY_VPS|$NETWORK_WG_PRESHARED_KEY_VPS|g" "$file"
-          sed -i "s|\$CLOUDFLARED_TUNNEL_TOKEN|$CLOUDFLARED_TUNNEL_TOKEN|g" "$file"
-        done
-        
         cp $GITHUB_WORKSPACE/sdk/bin/packages/x86_64/base/*.ipk $GITHUB_WORKSPACE/imagebuilder/packages/
-        PACKAGES=$(cat $GITHUB_WORKSPACE/master.packages.txt | tr '\n' ' ')
+        PACKAGES=$(cat $GITHUB_WORKSPACE/gateway.packages.txt | tr '\n' ' ')
         cd $GITHUB_WORKSPACE/imagebuilder
-        make image PROFILE="generic" PACKAGES="$PACKAGES" FILES="$GITHUB_WORKSPACE/files/master" || { echo "Compile failed"; exit 1; }
+        make image PROFILE="generic" PACKAGES="$PACKAGES" FILES="$GITHUB_WORKSPACE/files/gateway" || { echo "Compile failed"; exit 1; }
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Organize files
@@ -195,8 +140,8 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success' && !cancelled()
       run: |
-        echo "release_tag=ImmortalWrt-Master-$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
-        echo "ImmortalWrt Master Build" > release.txt
+        echo "release_tag=ImmortalWrt-Gateway-$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
+        echo "ImmortalWrt Gateway Build" > release.txt
         cat imagebuilder/bin/targets/x86/64/checksums.txt >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT
 
