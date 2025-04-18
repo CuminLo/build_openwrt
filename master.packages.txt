@@ -132,6 +132,8 @@ nping-ssl
 qrencode
 libqrencode
 tailscale
+zoneinfo-asia
+mosdns
 luci-i18n-dawn-zh-cn
 luci-i18n-netdata-zh-cn
 luci-i18n-package-manager-zh-cn

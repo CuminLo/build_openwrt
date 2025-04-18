@@ -1,0 +1,122 @@
+log:
+  level: debug
+  file: "/tmp/mosdns.log"
+
+plugins:
+  # 局域网白名单
+  - tag: whitelist_lan_ip
+    type: ip_set
+    args:
+      files:
+        - /etc/mosdns/whitelist-lan-ip.txt
+
+  # 大陆白名单
+  - tag: cn_ip
+    type: ip_set
+    args:
+      files:
+        - /etc/mosdns/cn.txt
+
+  # Dnsmasq DNS
+  - tag: local
+    type: forward
+    args:
+      concurrent: 1
+      upstreams:
+        - addr: "udp://127.0.0.1:54"
+
+  - tag: "ecs_cn"
+    type: "ecs_handler"
+    args:
+      forward: true
+      preset: 120.76.0.0
+      send: true
+
+  - tag: forward_meta_real
+    type: forward
+    args:
+      upstreams:
+        - addr: udp://127.0.0.1:1053
+
+  - tag: "forward_meta_with_nftset"
+    type: "sequence"
+    args:
+      - exec: $forward_meta_real
+      - matches: "!resp_ip 198.18.0.0/15"
+        exec: nftset inet,nikki,china_ip,ipv4_addr,24 inet,nikki,china_ip6,ipv6_addr,48
+
+  - tag: forward_cn
+    type: forward
+    args:
+      concurrent: 2
+      upstreams:
+        - tag: ali_doh_1
+          addr: "https://dns.alidns.com/dns-query"
+          dial_addr: "223.5.5.5"
+          enable_pipeline: true
+          enable_http3: true
+        - tag: ali_doh_2
+          addr: "https://dns.alidns.com/dns-query"
+          dial_addr: "223.6.6.6"
+          enable_pipeline: true
+          enable_http3: true
+        - tag: pod_doh
+          addr: "https://doh.pub/dns-query"
+          dial_addr: "1.12.12.12"
+          enable_pipeline: true
+          enable_http3: false
+
+  - tag: local_sequence
+    type: sequence
+    args:
+      - exec: $forward_cn
+      - matches: resp_ip $cn_ip
+        exec: accept
+      - exec: drop_resp
+
+  - tag: remote_sequence
+    type: sequence
+    args:
+      - exec: $forward_meta_real
+      - matches: "!resp_ip $cn_ip"
+        exec: accept
+
+  - tag: fallback
+    type: fallback
+    args:
+      primary: local_sequence
+      secondary: remote_sequence
+      threshold: 500
+      always_standby: true 
+
+  - tag: "main_sequence"
+    type: "sequence"
+    args:
+      # 不是局域网白名单只走国内
+      - exec: $ecs_cn
+      
+      - matches: "!client_ip &/etc/mosdns/whitelist-lan-ip.txt"
+        exec: $forward_cn
+      - matches: has_resp
+        exec: accept
+
+      # 国内域名（direct-list.txt）
+      - matches: qname &/etc/mosdns/direct-list.txt
+        exec: $forward_cn
+      - matches: has_resp
+        exec: accept
+
+      # 国外域名（proxy-list.txt）
+      - matches: qname &/etc/mosdns/proxy-list.txt
+        exec: $forward_meta_with_nftset
+      - matches: has_resp
+        exec: accept
+
+      # 其他域名使用后备 DNS
+      - exec: $fallback
+
+  - tag: "mosdns_server"
+    type: "udp_server"
+    args:
+      listen: :1153
+      entry: main_sequence
