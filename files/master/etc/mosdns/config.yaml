@@ -17,21 +17,6 @@ plugins:
       files:
         - /etc/mosdns/cn.txt
 
-  # Dnsmasq DNS
-  - tag: local
-    type: forward
-    args:
-      concurrent: 1
-      upstreams:
-        - addr: "udp://127.0.0.1:54"
-
-  - tag: "ecs_cn"
-    type: "ecs_handler"
-    args:
-      forward: true
-      preset: 120.76.0.0
-      send: true
-
   - tag: forward_meta_real
     type: forward
     args:
@@ -93,8 +78,6 @@ plugins:
     type: "sequence"
     args:
       # 不是局域网白名单只走国内
-      - exec: $ecs_cn
-      
       - matches: "!client_ip &/etc/mosdns/whitelist-lan-ip.txt"
         exec: $forward_cn
       - matches: has_resp

@@ -17,9 +17,9 @@ on:
 env:
   IMAGE_BUILD_URL: https://downloads.immortalwrt.org/releases/24.10.1/targets/x86/64/immortalwrt-imagebuilder-24.10.1-x86-64.Linux-x86_64.tar.zst
   SDK_URL: https://downloads.immortalwrt.org/releases/24.10.1/targets/x86/64/immortalwrt-sdk-24.10.1-x86-64_gcc-13.3.0_musl.Linux-x86_64.tar.zst
-  IMAGE_BUILD_NAME: immortalwrt-imagebuilder-24.10.0-x86-64.Linux-x86_64.tar.zst
+  IMAGE_BUILD_NAME: immortalwrt-imagebuilder-24.10.1-x86-64.Linux-x86_64.tar.zst
   NIKKI_URL: https://github.com/nikkinikki-org/OpenWrt-nikki
-  NIKKI_FEED_URL: https://nikkinikki.pages.dev/openwrt-24.10/x86_64/nikki
+  NIKKI_FEED_URL: https://nikkinikki.pages.dev/openwrt-24.10.1/x86_64/nikki
   NETSPEEDTEST_URL: https://github.com/sirpdboy/netspeedtest.git
   IS_ENABLE: 0
   IS_SSH_DEBUG: false
