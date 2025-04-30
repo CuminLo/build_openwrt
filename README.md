@@ -19,7 +19,7 @@
     - `wireguard`
     - `dawn`（AP 无缝漫游，即使没有无线也推荐安装）
     - `ddns-go`
-    - `tailscale`、`zerotier`、`cloudflared`（备用）
+    - `tailscale`、`zerotier`
     - 其他包，严格来说对我非必须
 
 ## License

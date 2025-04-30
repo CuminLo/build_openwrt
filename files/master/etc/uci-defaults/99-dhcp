@@ -163,5 +163,10 @@ set dhcp.@host[-1].name='Lucy-Watch'
 add_list dhcp.@host[-1].mac='88:45:F0:54:F2:01'
 set dhcp.@host[-1].ip='192.168.50.104'
 
+add dhcp host
+set dhcp.@host[-1].name='Device-QingTing-k9'
+add_list dhcp.@host[-1].mac='08:7D:B8:4E:17:5F'
+set dhcp.@host[-1].ip='192.168.50.105'
+
 commit
 EOF
