@@ -73,6 +73,11 @@ kmod-nft-tproxy
 kmod-nft-socket
 kmod-tun
 kmod-drm-i915
+kmod-nft-bridge
+kmod-veth
+kmod-sched-core
+kmod-sched-bpf
+kmod-xdp-sockets-diag
 kmod-wireguard
 wireguard-tools
 luci-proto-wireguard
